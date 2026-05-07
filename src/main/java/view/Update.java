@@ -20,6 +20,7 @@ import org.jdatepicker.JDatePicker;
 
 /**
  * Interface used to updated a person. It is mandatory to enter the NIF.
+ *
  * @author Francesc Perez
  * @version 1.1.0
  */
@@ -28,6 +29,18 @@ public class Update extends javax.swing.JDialog {
     public Update(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+
+        // SE AGREGA ESTA LINEA PARA EL ISSUE #4 
+        // Usamos el for para recorrer todas las lineas del comp DatePicker
+        for (java.awt.Component c : dateOfBirth.getComponents()) {
+            // Si encuentra el boton lo que hace es actualizar los tres puntos al texto
+            if (c instanceof javax.swing.JButton btn) {
+                btn.setText("Select a date");
+                // Extendemos el ancho a 110px y mantenemos el mismo alto que trae por defecto
+                btn.setPreferredSize(new java.awt.Dimension(110, btn.getPreferredSize().height));
+            }
+        }
+
         setLocationRelativeTo(null);
         DropPhotoListener d = new DropPhotoListener(photo, this);
         DropTarget dropTarget = new DropTarget(photo, d);
@@ -267,7 +280,7 @@ public class Update extends javax.swing.JDialog {
         if (nif.getText().length() == 8) {
             evt.consume();
             nif.setText(calculateNifLetter(nif.getText()));
-            nif.setEditable(false);  
+            nif.setEditable(false);
             read.doClick();
         }
     }//GEN-LAST:event_nifKeyPressed
@@ -292,7 +305,7 @@ public class Update extends javax.swing.JDialog {
         nif.setText("");
         name.setText("");
         dateOfBirth.getModel().setValue(null);
-        photo.setIcon(null); 
+        photo.setIcon(null);
         name.setEnabled(false);
         photo.setEnabled(false);
         //We reset the calendar date to the current date ...
@@ -325,7 +338,7 @@ public class Update extends javax.swing.JDialog {
     private void nameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nameKeyReleased
         if (name.getText().length() == 0) {
             update.setEnabled(false);
-        }else if(!nif.getText().isEmpty()){
+        } else if (!nif.getText().isEmpty()) {
             update.setEnabled(true);
         }
     }//GEN-LAST:event_nameKeyReleased

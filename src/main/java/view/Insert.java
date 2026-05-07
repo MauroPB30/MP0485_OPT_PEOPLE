@@ -19,8 +19,9 @@ import org.jdatepicker.DateModel;
 import org.jdatepicker.JDatePicker;
 
 /**
- * Interface used to register a person. It is mandatory to enter at least the 
+ * Interface used to register a person. It is mandatory to enter at least the
  * NIF and the name.
+ *
  * @author Francesc Perez
  * @version 1.1.0
  */
@@ -29,6 +30,17 @@ public class Insert extends javax.swing.JDialog {
     public Insert(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+// SE AGREGA ESTA LINEA PARA EL ISSUE #4 
+        // Usamos el for para recorrer todas las lineas del comp DatePicker
+        for (java.awt.Component c : dateOfBirth.getComponents()) {
+            // Si encuentra el boton lo que hace es actualizar los tres puntos al texto
+            if (c instanceof javax.swing.JButton btn) {
+                btn.setText("Select a date");
+                // Extendemos el ancho a 110px y mantenemos el mismo alto que trae por defecto
+                btn.setPreferredSize(new java.awt.Dimension(110, btn.getPreferredSize().height));
+            }
+        }
+
         DropPhotoListener d = new DropPhotoListener(photo, this);
         DropTarget dropTarget = new DropTarget(photo, d);
         insert.setEnabled(false);
