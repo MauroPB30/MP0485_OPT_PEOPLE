@@ -184,7 +184,7 @@ public class Delete extends javax.swing.JDialog {
 
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "All persons have been deleted successfully!");
+//        JOptionPane.showMessageDialog(this, "All persons have been deleted successfully!");
     }//GEN-LAST:event_deleteActionPerformed
 
     /**
