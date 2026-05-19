@@ -38,6 +38,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.jdatepicker.DateModel;
 import utils.Constants;
+import view.Count;
 
 /**
  * This class starts the visual part of the application and programs and manages
@@ -113,6 +114,8 @@ public class ControllerImplementation implements IController, ActionListener {
             handleReadAll();
         } else if (e.getSource() == menu.getDeleteAll()) {
             handleDeleteAll();
+        }else if (e.getSource() == menu.getCount()){
+            handleCount();
         }
     }
 
@@ -218,6 +221,7 @@ public class ControllerImplementation implements IController, ActionListener {
         menu.getDelete().addActionListener(this);
         menu.getReadAll().addActionListener(this);
         menu.getDeleteAll().addActionListener(this);
+        menu.getCount().addActionListener(this);
     }
 
     private void handleInsertAction() {
@@ -386,7 +390,13 @@ public class ControllerImplementation implements IController, ActionListener {
         if (answer == 0) {
             deleteAll();
         }
-    }
+    }public void handleCount() {
+    int total = count();
+    Count countView = new Count(menu, true);
+    countView.getCountLabel().setText(String.valueOf(total));
+    countView.setVisible(true);
+}
+    
 
     /**
      * This function inserts the Person object with the requested NIF, if it
@@ -541,5 +551,21 @@ public class ControllerImplementation implements IController, ActionListener {
             }
         }
     }
+     
 
+    @Override
+public int count() {
+    try {
+        return dao.count();
+    } catch (Exception ex) {
+        if (ex instanceof FileNotFoundException || ex instanceof IOException
+                || ex instanceof ParseException || ex instanceof ClassNotFoundException
+                || ex instanceof SQLException || ex instanceof PersistenceException) {
+            JOptionPane.showMessageDialog(menu, ex.getMessage() + " Closing application.",
+                    "Count - People v1.1.0", JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
+        }
+    }
+    return 0;
+}
 }
